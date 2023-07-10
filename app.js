@@ -1,3 +1,9 @@
+/*
+Programmer: Harsh Moreshwar Kale
+Project: MugBit
+Date: 10/07/2023
+*/
+
 require('dotenv').config();
 
 const moongose = require('mongoose');
