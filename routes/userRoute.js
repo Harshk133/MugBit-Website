@@ -44,6 +44,9 @@ user_route.get('/logout', auth.isLogin, userController.logout);
 
 user_route.get('/dashboard', auth.isLogin, userController.loadDashboard);
 
+// Implementing the chat page for mugbit!
+user_route.get('/chat', auth.isLogin, userController.loadChatPg);
+
 user_route.get('*', function(req, res){
     res.redirect('/');
 })

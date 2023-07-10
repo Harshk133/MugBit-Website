@@ -3,6 +3,7 @@
 *Project: MugBit
 *Date: 10/07/2023
 *-->
+<!--
 <!DOCTYPE html>
 <html lang="en">
 
@@ -159,8 +160,7 @@
     </style>
 </head>
 
-<body>
-    <!-- Header -->
+<body> 
     <div class="header">
         <header>
             <div class="logo">
@@ -176,63 +176,29 @@
     </div>
 
     <div class="container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="list">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/dashboard">Home</a></li>
                     <li><a href="#">Java Bot</a></li>
                     <li><a href="/chat">Chat</a></li>
                     <li><a href="/logout">Log out</a></li>
                 </ul>
             </div>
         </div>
-        <!-- Main -->
         <div class="main">
             <div class="content">
-                <h2>Welcome <span><i>
-                            <%= user.name %>,
-                        </i></span> to Mugbit🔥</h2>
+                <h2><span><i><%= user.name %>, </i></span> You can Chat with Friends on Mugbit🔥</h2>
                 <hr>
-                <br>
-                <div class="document-container">
-                    <div class="docxbox">
-                        <div class="label">Subject</div>
-                        <div class="document">
-                            Your Document!
-                        </div>
-                        <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
-                        </div>
-                    </div>
-                    <div class="docxbox">
-                        <div class="label">Subject</div>
-                        <div class="document">
-                            Your Document!
-                        </div>
-                        <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
-                        </div>
-                    </div>
-                    <div class="docxbox">
-                        <div class="label">Subject</div>
-                        <div class="document">
-                            Your Document!
-                        </div>
-                        <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
-                        </div>
-                    </div>
-                </div>
+                <br> 
+            -->
+<%- include('layouts/header.ejs') %>
+
+<%- include('layouts/footer.ejs') %>
+            <!--
             </div>
         </div>
     </div>
 </body>
-
 </html>
+-->

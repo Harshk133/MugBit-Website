@@ -72,11 +72,20 @@ const loadDashboard = async(req, res) => {
     }
 };
 
+const loadChatPg = async(req, res) => {
+    try {
+        res.render("chat", { user: req.session.user });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     registerLoad,
     register,
     loadLogin,
     login,
     logout,
+    loadChatPg,
     loadDashboard
 }
