@@ -74,7 +74,8 @@ const loadDashboard = async(req, res) => {
 
 const loadChatPg = async(req, res) => {
     try {
-        res.render("chat", { user: req.session.user });
+        var users = await User.find({ _id: { $nin: [ req.session.user._id ] } });
+        res.render("chat", { user: req.session.user, users: users });
     } catch (error) {
         console.log(error.message);
     }

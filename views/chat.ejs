@@ -174,7 +174,10 @@
             </div>
         </header>
     </div>
-
+    -->
+   
+                    <!-- list of users -->
+    <%- include('layouts/header.ejs') %>
     <div class="container">
         <div class="sidebar">
             <div class="list">
@@ -182,6 +185,18 @@
                     <li><a href="/dashboard">Home</a></li>
                     <li><a href="#">Java Bot</a></li>
                     <li><a href="/chat">Chat</a></li>
+                    <ul class="chat-row">
+                        <%
+                            if(users.length > 0){
+                                for(let i=0; i<users.length; i++){
+                                    %>
+                                        <li class="chat-row-li" style="margin-left: 5px;"><%= users[i]["name"] %></li>
+                                    <%
+                                }
+                            }
+                        %>
+                    </ul>
+        
                     <li><a href="/logout">Log out</a></li>
                 </ul>
             </div>
@@ -191,10 +206,12 @@
                 <h2><span><i><%= user.name %>, </i></span> You can Chat with Friends on Mugbit🔥</h2>
                 <hr>
                 <br> 
-            -->
-<%- include('layouts/header.ejs') %>
+                <!-- messages showed to here -->
+                <div class="chat-ground">
 
-<%- include('layouts/footer.ejs') %>
+                </div>
+                <%- include('layouts/footer.ejs') %>
+
             <!--
             </div>
         </div>
