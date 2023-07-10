@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 90%;
+            width: 100%;
+            height: 100vh;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        p {
+            font-size: 40px;
+            text-shadow: 3 7 white;
+            font-family: monospace;
+            border: 1px solid white;
+        }
+
+        form>div {
+            margin: 10px 0;
+        }
+
+        .btn {
+            width: 100%;
+            height: 30px;
+            background: aliceblue;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .btn:hover{
+            transform: rotate3d(1, 1, 1, 360deg);
+            transition: transform 2s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form">
+            <% if(typeof message !== 'undefined' ){ %>
+                <h4 style="color: chartreuse;"><b><i><%= message %></i></b></h4>
+                <% } %>
+                    <div class="mugbit_title">
+                        <p>MugBit Login</p>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="email">
+                            <label for="email">Enter Your Email:</label>
+                            <input type="email" name="email" id="email" required>
+                        </div>
+                        <div class="password">
+                            <label for="psw">Enter Your Password: </label>
+                            <input type="password" name="password" id="psw" required>
+                        </div>
+                        <div class="button">
+                            <input type="submit" value="Done👍" class="btn">
+                        </div>
+                    </form>
+        </div>
+    </div>
+</body>
+
+</html>

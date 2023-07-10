@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Mugbit!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: orange;
+            height: 40px;
+        }
+
+        header {
+            margin: 0 auto;
+            max-width: 90%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo p {
+            width: 50%;
+            padding: 7px;
+            font-size: 22px;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            font-weight: bolder;
+        }
+
+        .usrinfo {
+            width: 50%;
+        }
+
+        .container {
+            max-width: 90%;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            height: calc(100vh - 40px);
+        }
+
+        .container .sidebar {
+            border: 1px solid black;
+            width: 20%;
+        }
+
+        .sidebar .list {
+            margin: 10px;
+        }
+
+        .sidebar .list ul li {
+            border: 1px solid black;
+            border-radius: 2px;
+            list-style: none;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .sidebar .list ul li a{
+            text-decoration: none;
+            color: black;
+        }
+
+        .container .main {
+            border: 1px solid grey;
+            width: 80%;
+        }
+
+        .main .content {
+            margin: 10px;
+        }
+
+        .document-container {
+            overflow-y: auto;
+            width: 100%;
+            height: 80vh;
+        }
+
+        .docxbox {
+            margin: 5px 0;
+            background-color: yellow;
+            width: 100%;
+            height: 220px;
+            border: 1px solid black;
+            border-radius: 4px;
+            box-shadow: 1 1 1 1 black;
+        }
+
+        .docxbox .document {
+            margin: 2px;
+            background: white;
+            height: 160px;
+            border: 1px solid;
+        }
+
+        .docxbox .label {
+            float: right;
+            transform: rotate(43deg);
+            position: relative;
+            right: -4px;
+            top: 22px;
+            background: red;
+            width: 10%;
+            text-align: center;
+        }
+
+        .docxbox .plate {
+            display: flex;
+            width: 20%;
+            float: right;
+        }
+
+        .thanks {
+            margin: 2px;
+            width: 22px;
+            /* border: 1px solid; */
+            /* border-radius: 3px; */
+            cursor: pointer;
+        }
+
+        .use {
+            margin: 2px;
+            width: 30px;
+            /* border: 1px solid; */
+            /* border-radius: 3px; */
+            cursor: pointer;
+        }
+
+        .download {
+            margin: 2px;
+            width: 70px;
+            /* border: 1px solid; */
+            /* border-radius: 3px; */
+            cursor: pointer;
+        }
+
+        @media (max-width: 780px) {
+            .container {
+                width: 100%;
+                display: flex;
+                height: calc(100vh - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <header>
+            <div class="logo">
+                <p>MugBit</p>
+            </div>
+            <div class="usrinfo">
+                <img src="<%= user.image  %>" alt="Image" width="4%">
+                <span><i>
+                        <%= user.name %>!
+                    </i></span>
+            </div>
+        </header>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="list">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Java Bot</a></li>
+                    <li><a href="#">Chat</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main -->
+        <div class="main">
+            <div class="content">
+                <h2>Welcome <span><i>
+                            <%= user.name %>,
+                        </i></span> to Mugbit🔥</h2>
+                <hr>
+                <br>
+                <div class="document-container">
+                    <div class="docxbox">
+                        <div class="label">Subject</div>
+                        <div class="document">
+                            Your Document!
+                        </div>
+                        <div class="plate">
+                            <div class="thanks">🌟</div>
+                            <div class="use">Use</div>
+                            <div class="download">Download</div>
+                        </div>
+                    </div>
+                    <div class="docxbox">
+                        <div class="label">Subject</div>
+                        <div class="document">
+                            Your Document!
+                        </div>
+                        <div class="plate">
+                            <div class="thanks">🌟</div>
+                            <div class="use">Use</div>
+                            <div class="download">Download</div>
+                        </div>
+                    </div>
+                    <div class="docxbox">
+                        <div class="label">Subject</div>
+                        <div class="document">
+                            Your Document!
+                        </div>
+                        <div class="plate">
+                            <div class="thanks">🌟</div>
+                            <div class="use">Use</div>
+                            <div class="download">Download</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
