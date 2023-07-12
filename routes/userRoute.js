@@ -1,4 +1,7 @@
 const express = require('express');
+const PizZip = require('pizzip');
+const Docxtemplater = require('docxtemplater');
+const fs = require('fs');
 const user_route = express();
 
 const bodyParser = require('body-parser');
@@ -50,6 +53,48 @@ user_route.get('/chat', auth.isLogin, userController.loadChatPg);
 user_route.get('*', function(req, res){
     res.redirect('/');
 })
+
+
+// MugBit Document Creator implementation code!
+const templateFile = fs.readFileSync(path.resolve(__dirname, '../public/Sample_template_certificate.docx'), 'binary');
+const zip = new PizZip(templateFile);
+
+user_route.post('/form', (req, res) => {
+    console.log(req.body);
+    try {
+		let outputDocument = new Docxtemplater(zip);
+
+		const dataToAdd = {
+			STUDENT_NAME: req.body.name,
+			COI: req.body.student_enr,
+			MICROPROJECT_TITLE: req.body.microproject_title,
+			TEACHER_NAME: req.body.teacher_name,
+			STUDENT_ENR: req.body.enrollmentNo
+		};
+
+		// Set the data we wish to add to the document
+		outputDocument.setData(dataToAdd);
+
+		try {
+			// Attempt to render the document (Add data to the template)
+			outputDocument.render()
+
+			// Create a buffer to store the output data
+			let outputDocumentBuffer = outputDocument.getZip().generate({ type: 'nodebuffer' });
+
+			// Save the buffer to a file
+			fs.writeFileSync(path.resolve(__dirname, './files/Certificate.docx'), outputDocumentBuffer);
+		}
+		catch (error) {
+			console.error(`ERROR Filling out Template:`);
+			console.error(error)
+		}
+	} catch (error) {
+		console.error(`ERROR Loading Template:`);
+		console.error(error);
+	}
+    res.redirect('/dashboard');
+});
 
 
 module.exports = user_route;

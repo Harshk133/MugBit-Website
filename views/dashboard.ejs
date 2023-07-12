@@ -1,8 +1,4 @@
-<!--*
-*Programmer: Harsh Moreshwar Kale
-*Project: MugBit
-*Date: 10/07/2023
-*-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +8,11 @@
     <title>Welcome To Mugbit!</title>
     <script src="jquery-3.6.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -21,7 +22,7 @@
 
         .header {
             background-color: orange;
-            height: 40px;
+            height: 50px;
         }
 
         header {
@@ -44,6 +45,7 @@
 
         .usrinfo {
             width: 50%;
+            margin-bottom: 10px;
         }
 
         .container {
@@ -71,7 +73,7 @@
             cursor: pointer;
         }
 
-        .sidebar .list ul li a{
+        .sidebar .list ul li a {
             text-decoration: none;
             color: black;
         }
@@ -93,18 +95,19 @@
 
         .docxbox {
             margin: 5px 0;
-            background-color: yellow;
+            background-color: orange;
             width: 100%;
-            height: 220px;
+            height: 320px;
             border: 1px solid black;
             border-radius: 4px;
             box-shadow: 1 1 1 1 black;
+            cursor: pointer;
         }
 
         .docxbox .document {
             margin: 2px;
             background: white;
-            height: 160px;
+            height: 240px;
             border: 1px solid;
         }
 
@@ -126,7 +129,7 @@
         }
 
         .thanks {
-            margin: 2px;
+            margin: 5px;
             width: 22px;
             /* border: 1px solid; */
             /* border-radius: 3px; */
@@ -134,18 +137,23 @@
         }
 
         .use {
+            color: white;
+            padding: 1px;
             margin: 2px;
-            width: 30px;
-            /* border: 1px solid; */
-            /* border-radius: 3px; */
+            width: 32px;
+            border: 1px solid black;
+            background-color: rgb(97, 97, 97);
+            border-radius: 3px;
             cursor: pointer;
         }
 
         .download {
+            padding: 1px;
             margin: 2px;
-            width: 70px;
-            /* border: 1px solid; */
-            /* border-radius: 3px; */
+            width: 80px;
+            background-color: rgb(97, 97, 97);
+            color: white;
+            border: 1px solid black;
             cursor: pointer;
         }
 
@@ -167,7 +175,7 @@
                 <p>MugBit</p>
             </div>
             <div class="usrinfo">
-                <img src="<%= user.image  %>" alt="Image" width="4%">
+                <img src="<%= user.image %>" alt="Image" width="4%">
                 <span><i>
                         <%= user.name %>!
                     </i></span>
@@ -197,42 +205,74 @@
                 <br>
                 <div class="document-container">
                     <div class="docxbox">
+                        <h5>Certificiate</h5>
                         <div class="label">Subject</div>
                         <div class="document">
-                            Your Document!
+                            <center>
+                                <img src="http://localhost:3000/msdocument.jfif" style="width: 45%;
+                                height: 230px;
+                                margin: 4px;">
+                            </center>
                         </div>
                         <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
-                        </div>
-                    </div>
-                    <div class="docxbox">
-                        <div class="label">Subject</div>
-                        <div class="document">
-                            Your Document!
-                        </div>
-                        <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
-                        </div>
-                    </div>
-                    <div class="docxbox">
-                        <div class="label">Subject</div>
-                        <div class="document">
-                            Your Document!
-                        </div>
-                        <div class="plate">
-                            <div class="thanks">🌟</div>
-                            <div class="use">Use</div>
-                            <div class="download">Download</div>
+                            <div class="thanks"><big>🌟</big></div>
+                            <div class="use" id="use-btn">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#certificateModal" style="background: rgb(97, 97, 97);
+                                border: none; color: white;">
+                                    Use
+                                </button>
+                            </div>
+                            <div class="download" id="dl-btn">Download</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Button trigger modal -->
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="certificateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Certificiate!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form">
+                            <form action="/form" method="post">
+                                Name: <input type="text" name="name" />
+                                <br>
+                                microproject-Title: <input type="text" name="microproject_title" />
+                                <br>
+                                Enrollment Number: <input type="text" name="enrollmentNo" />
+                                <br>
+                                Teacher Name: <input type="text" name="teacher_name" />
+                                <br>
+                                <input type="submit" class="btn btn-primary" value="Done">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Create My Document</button> -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        let useButton = document.getElementById("use-btn");
+        // let downloadButton = document.getElementById("dl-btn");
+        useButton.addEventListener("click", openFormBox);
+        function openFormBox() {
+            console.log("Form Box Opened!!");
+        }
+    </script>
 </body>
 
 </html>

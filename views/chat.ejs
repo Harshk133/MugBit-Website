@@ -190,7 +190,9 @@
                             if(users.length > 0){
                                 for(let i=0; i<users.length; i++){
                                     %>
-                                        <li class="chat-row-li" style="margin-left: 5px;"><%= users[i]["name"] %></li>
+                                        <li class="chat-row-li user-list" style="margin-left: 5px; cursor: pointer;">
+                                            <img src='<%= "http://localhost:3000/"+users[i]["image"]%>' alt="Image" style="width: 30px;"><span data-uname="<%= users[i]['name'] %>" class="trtg"><%= users[i]["name"] %></span>
+                                        </li>
                                     <%
                                 }
                             }
@@ -207,9 +209,25 @@
                 <hr>
                 <br> 
                 <!-- messages showed to here -->
-                <div class="chat-ground">
-
+                <h3 class="start-head"><mark>Click to Start Chat!</mark></h3>
+                <div class="chat-section">
+                    You are chating with <span id="shwname">Om</span>
+                    <div id="chat-container"></div>
+                    <form action="" id="chat-form">
+                        <input type="text" class="message" placeholder="Please be nice in chat!" id="message" required>
+                        <input type="submit" value="Send">
+                    </form>
                 </div>
+                
+                <script>
+                    $(document).ready(function(){
+                        $('.user-list').click(function(){
+                            $('.start-head').hide();
+                            $('.chat-section').show();
+                            $('#shwname').text( $(".trtg").attr("data-uname") );
+                        });
+                    });
+                </script>
                 <%- include('layouts/footer.ejs') %>
 
             <!--
