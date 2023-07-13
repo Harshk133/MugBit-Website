@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -202,6 +201,9 @@
                             <%= user.name %>,
                         </i></span> to Mugbit🔥</h2>
                 <hr>
+                <div id="targetedA">
+
+                </div>
                 <br>
                 <div class="document-container">
                     <div class="docxbox">
@@ -230,10 +232,11 @@
         </div>
 
         <!-- Button trigger modal -->
-        
+
 
         <!-- Modal -->
-        <div class="modal fade" id="certificateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="certificateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -242,7 +245,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form">
-                            <form action="/form" method="post">
+                            <form action="/form" method="post" id="certificateModalForm">
                                 Name: <input type="text" name="name" />
                                 <br>
                                 microproject-Title: <input type="text" name="microproject_title" />
@@ -251,14 +254,14 @@
                                 <br>
                                 Teacher Name: <input type="text" name="teacher_name" />
                                 <br>
-                                <input type="submit" class="btn btn-primary" value="Done">
+                                <input type="submit" class="btn btn-primary" value="Done" onclick="showMsg()">
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <!-- <button type="button" class="btn btn-primary">Create My Document</button> -->
-                        
+
                     </div>
                 </div>
             </div>
@@ -266,6 +269,39 @@
     </div>
 
     <script>
+        certificateModalForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+        })
+        var div = document.getElementById("targetedA");
+        function showMsg() {
+            let p = document.createElement("p");
+            p.style.color = "green";
+            p.textContent = "Document is Created!";
+            div.appendChild(p);
+
+            var certificateModalForm = document.getElementById("certificateModalForm");
+            var modalBg = document.querySelector(".modal-backdrop");
+            var modalBgSet = document.querySelector(".modal .fade .show");
+            certificateModalForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                console.log("Values Submitted!");
+                $("#certificateModal").hide();
+                if (modalBg) {
+                    if(modalBgSet){
+                        modalBgSet.style.background = "#6464647a";
+                    }
+                    $(".modal-backdrop").hide();
+                }
+            })
+
+
+            if (div) {
+                setTimeout(() => {
+                    p.style.display = "none";
+                }, 3000);
+            }
+        }
+
         let useButton = document.getElementById("use-btn");
         // let downloadButton = document.getElementById("dl-btn");
         useButton.addEventListener("click", openFormBox);

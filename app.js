@@ -17,6 +17,12 @@ const userRoute = require('./routes/userRoute');
 
 app.use('/', userRoute);
 
+// const io = require("socket.io")(http);
+
+// var usp = io.of('/user-namespace');
+
+// usp.on();
+
 http.listen(port, function(){
     console.log(`Server is running at http://localhost:${port}`);
 })
