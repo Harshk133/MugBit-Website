@@ -245,8 +245,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form">
-                            <form action="/form" method="post" id="certificateModalForm">
-                                Name: <input type="text" name="name" />
+                            <form action="/form" method="post">
+                                Name: <input type="text" name="uname" />
                                 <br>
                                 microproject-Title: <input type="text" name="microproject_title" />
                                 <br>
@@ -268,47 +268,6 @@
         </div>
     </div>
 
-    <script>
-        certificateModalForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-        })
-        var div = document.getElementById("targetedA");
-        function showMsg() {
-            let p = document.createElement("p");
-            p.style.color = "green";
-            p.textContent = "Document is Created!";
-            div.appendChild(p);
-
-            var certificateModalForm = document.getElementById("certificateModalForm");
-            var modalBg = document.querySelector(".modal-backdrop");
-            var modalBgSet = document.querySelector(".modal .fade .show");
-            certificateModalForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                console.log("Values Submitted!");
-                $("#certificateModal").hide();
-                if (modalBg) {
-                    if(modalBgSet){
-                        modalBgSet.style.background = "#6464647a";
-                    }
-                    $(".modal-backdrop").hide();
-                }
-            })
-
-
-            if (div) {
-                setTimeout(() => {
-                    p.style.display = "none";
-                }, 3000);
-            }
-        }
-
-        let useButton = document.getElementById("use-btn");
-        // let downloadButton = document.getElementById("dl-btn");
-        useButton.addEventListener("click", openFormBox);
-        function openFormBox() {
-            console.log("Form Box Opened!!");
-        }
-    </script>
-</body>
+    </body>
 
 </html>

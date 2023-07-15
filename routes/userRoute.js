@@ -58,43 +58,51 @@ user_route.get('*', function(req, res){
 // MugBit Document Creator implementation code!
 const templateFile = fs.readFileSync(path.resolve(__dirname, '../public/Sample_template_certificate.docx'), 'binary');
 const zip = new PizZip(templateFile);
+const templateFilePath = path.resolve(__dirname, '../public/Sample_template_certificate.docx');
+
+user_route.get('/form', auth.isLogin, userController.loadDashboard);
 
 user_route.post('/form', (req, res) => {
     console.log(req.body);
+    let docname = req.body.uname;
     try {
-		let outputDocument = new Docxtemplater(zip);
+        // Read the template file fresh for each form submission
+        const templateFile = fs.readFileSync(templateFilePath, 'binary');
+        const zip = new PizZip(templateFile);
+        let outputDocument = new Docxtemplater(zip);
 
-		const dataToAdd = {
-			STUDENT_NAME: req.body.name,
-			COI: req.body.student_enr,
-			MICROPROJECT_TITLE: req.body.microproject_title,
-			TEACHER_NAME: req.body.teacher_name,
-			STUDENT_ENR: req.body.enrollmentNo
-		};
+        const dataToAdd = {
+            STUDENT_NAME: req.body.uname,
+            COI: req.body.student_enr,
+            MICROPROJECT_TITLE: req.body.microproject_title,
+            TEACHER_NAME: req.body.teacher_name,
+            STUDENT_ENR: req.body.enrollmentNo
+        };
 
-		// Set the data we wish to add to the document
-		outputDocument.setData(dataToAdd);
+        // Set the data we wish to add to the document
+        outputDocument.setData(dataToAdd);
 
-		try {
-			// Attempt to render the document (Add data to the template)
-			outputDocument.render()
+        try {
+            // Attempt to render the document (Add data to the template)
+            outputDocument.render();
 
-			// Create a buffer to store the output data
-			let outputDocumentBuffer = outputDocument.getZip().generate({ type: 'nodebuffer' });
+            // Create a buffer to store the output data
+            let outputDocumentBuffer = outputDocument.getZip().generate({ type: 'nodebuffer' });
 
-			// Save the buffer to a file
-			fs.writeFileSync(path.resolve(__dirname, './files/Certificate.docx'), outputDocumentBuffer);
-		}
-		catch (error) {
-			console.error(`ERROR Filling out Template:`);
-			console.error(error)
-		}
-	} catch (error) {
-		console.error(`ERROR Loading Template:`);
-		console.error(error);
-	}
+            // Save the buffer to a file
+            fs.writeFileSync(path.resolve(__dirname, `./files/${docname}-certificate.docx`), outputDocumentBuffer);
+        } catch (error) {
+            console.error(`ERROR Filling out Template:`);
+            console.error(error);
+        }
+    } catch (error) {
+        console.error(`ERROR Loading Template:`);
+        console.error(error);
+    }
     res.redirect('/dashboard');
 });
+
+
 
 
 module.exports = user_route;
