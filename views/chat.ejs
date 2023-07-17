@@ -7,47 +7,143 @@
                     <li><a href="#">Java Bot</a></li>
                     <li><a href="/chat">Chat</a></li>
                     <ul class="chat-row">
-                        <%
-                            if(users.length > 0){
-                                for(let i=0; i<users.length; i++){
-                                    %>
-                                        <li class="chat-row-li user-list" style="margin-left: 5px; cursor: pointer;">
-                                            <img src='<%= "http://localhost:3000/"+users[i]["image"]%>' alt="Image" style="width: 30px;"><span data-uname="<%= users[i]['name'] %>" class="trtg"><%= users[i]["name"] %></span>
-                                        </li>
-                                    <%
-                                }
-                            }
-                        %>
+                        <% if(users.length> 0){
+                            for(let i=0; i<users.length; i++){ %>
+                                <li class="chat-row-li user-list" style="margin-left: 5px; cursor: pointer;" data-id="<%= users[i]['_id'] %>" data-usrname="<%= users[i]['name'] %>">
+                                    <img src='<%= "http://localhost:3000/"+users[i]["image"]%>' alt="Image"
+                                        style="width: 30px;"><span data-uname="<%= users[i]['name'] %>" class="trtg">
+                                        <%= users[i]["name"] %>
+                                    </span>
+                                    <% if(users[i]["is_online"]== 1){ %>
+                                        <i class="online" id="<%= users[i]['_id'] %>-status">online</i>
+                                        <% }else{ %>
+                                            <i class="offline" id="<%= users[i]['_id'] %>-status">offline</i>
+                                            <% } %>
+                                </li>
+                                <% } } %>
                     </ul>
-        
+
                     <li><a href="/logout">Log out</a></li>
                 </ul>
             </div>
         </div>
         <div class="main">
             <div class="content">
-                <h2><span><i><%= user.name %>, </i></span> You can Chat with Friends on Mugbit🔥</h2>
+                <h2><span><i>
+                            <%= user.name %>,
+                        </i></span> You can Chat with Friends on Mugbit🔥</h2>
                 <hr>
-                <br> 
+                <br>
                 <!-- messages showed to here -->
                 <h3 class="start-head"><mark>Click to Start Chat!</mark></h3>
                 <div class="chat-section">
-                    You are chating with <span id="shwname">Om</span>
-                    <div id="chat-container"></div>
-                    <form action="" id="chat-form">
-                        <input type="text" class="message" placeholder="Please be nice in chat!" id="message" required>
+                    You are chating with <span class="shwname"></span>
+                    <div id="chat-container">
+                        
+                    </div>
+                    <form action="" id="chat-form" style="width: 80%;margin: 0 auto;">
+                        <input type="text" class="message" placeholder="Please be nice in chat!" id="message" style="width: 93%;
+                        " required>
                         <input type="submit" value="Send">
                     </form>
                 </div>
 
                 <script>
-                    $(document).ready(function(){
-                        $('.user-list').click(function(){
+                    var talkingPersonName;
+                    var receiver_id;
+                    var sender_id = "<%= user._id %>";
+                    var socket = io("/user-namespace", {
+                        auth: {
+                            token: "<%= user._id %>"
+                        }
+                    });
+
+                    $(document).ready(function () {
+                        $('.user-list').click(function () {
                             $('.start-head').hide();
                             $('.chat-section').show();
-                            $('#shwname').text( $(".trtg").attr("data-uname") );
+                            var userId = $(this).attr('data-id');
+                            receiver_id = userId;
+                            var talkingPerson = $(this).text($(this).attr('data-uname'));
+                            talkingPersonName = talkingPerson;
+                            let length = talkingPersonName[0]["outerText"].length;
+                            $('.shwname').text(talkingPersonName[0]["outerText"].substring(0, length-7));
+                            // console.log("The Person Name is ", talkingPersonName[0]["outerText"]);
+                            socket.emit("existsChat", { sender_id: sender_id, receiver_id: receiver_id });
                         });
+                    });
+
+                    // Update User Online Status
+                    socket.on("getOnlineUser", function(data){
+                        $("#"+data.user_id+'-status').text("online");
+                        $("#"+data.user_id+'-status').addClass("online");
+                        $("#"+data.user_id+'-status').removeClass("offline");
+                    });
+
+                    socket.on("getOfflineUser", function(data){
+                        $("#"+data.user_id+'-status').text(`offline at ${data.time}`);
+                        $("#"+data.user_id+'-status').addClass("offline");
+                        $("#"+data.user_id+'-status').removeClass("online");
+                    });
+
+                    // save the chat of user
+                    $("#chat-form").submit(function(event){
+                        event.preventDefault();
+                        var message = $('#message').val();
+
+                        $.ajax({
+                            url: '/save-chat',
+                            type: 'POST',
+                            data: { sender_id: sender_id, receiver_id: receiver_id, message: message },
+                            success: function(response){
+                                if(response.success){
+                                    console.log(response.data.message);
+                                    $('#message').val("");
+                                    let chat = response.data.message;
+                                    let html = `
+                                        <div class="current-user-chat">
+                                            <p>${chat}</p>
+                                        </div>
+                                    `;
+                                    $("#chat-container").append(html);
+                                    socket.emit("newChat", response.data);
+                                }else{
+                                    alert(data.msg);
+                                }
+                            }
+                        });
+                    });
+
+                    socket.on("loadNewChat", function(data){
+                        if(sender_id == data.receiver_id && receiver_id == data.sender_id){
+                            let html = `
+                                <div class="distance-user-chat">
+                                    <p>${data.message}</p>
+                                </div>
+                            `;
+                            $("#chat-container").append(html);
+                        }
+                    });
+
+                    // load old chats
+                    socket.on("loadChats", function(data){
+                        $("#chat-container").html("");
+                        var chats = data.chats;
+                        let html = "";
+                        for(let x = 0; x < chats.length; x++){
+                            let addClass = "";
+                            if(chats[x]["sender_id"] == sender_id){
+                                addClass = "current-user-chat";
+                            }else{
+                                addClass = "distance-user-chat";
+                            }
+                            html += `
+                                <div class="${addClass}">
+                                    <p>${chats[x]["message"]}</p>
+                                </div>
+                            `;
+                            $("#chat-container").append(html);
+                        }
                     });
                 </script>
                 <%- include('layouts/footer.ejs') %>
-
