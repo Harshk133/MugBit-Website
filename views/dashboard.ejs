@@ -19,9 +19,16 @@
             box-sizing: border-box;
         }
 
+        body{
+            overflow-y: hidden;
+        }
+
         .header {
             background-color: orange;
             height: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 99;
         }
 
         header {
@@ -43,7 +50,7 @@
         }
 
         .usrinfo {
-            width: 50%;
+            width: 30%;
             margin-bottom: 10px;
         }
 
@@ -55,6 +62,10 @@
             height: calc(100vh - 40px);
         }
 
+        .sidebar{
+            height: 93vh;
+        }
+
         .container .sidebar {
             border: 1px solid black;
             width: 20%;
@@ -62,6 +73,15 @@
 
         .sidebar .list {
             margin: 10px;
+        }
+
+        .sidebar .list ul{
+            padding-left: 0;
+        }
+
+        .sidebar .list ul a{
+            text-decoration: none;
+            color: black;
         }
 
         .sidebar .list ul li {
@@ -93,9 +113,9 @@
         }
 
         .docxbox {
-            margin: 5px 0;
+            margin: 7px auto;
             background-color: orange;
-            width: 100%;
+            width: 80%;
             height: 320px;
             border: 1px solid black;
             border-radius: 4px;
@@ -110,21 +130,9 @@
             border: 1px solid;
         }
 
-        .docxbox .label {
-            float: right;
-            transform: rotate(43deg);
-            position: relative;
-            right: -4px;
-            top: 22px;
-            background: red;
-            width: 10%;
-            text-align: center;
-        }
-
         .docxbox .plate {
             display: flex;
-            width: 20%;
-            float: right;
+            width: 100%;
         }
 
         .thanks {
@@ -154,6 +162,7 @@
             color: white;
             border: 1px solid black;
             cursor: pointer;
+            border-radius: 3px;
         }
 
         @media (max-width: 780px) {
@@ -174,7 +183,7 @@
                 <p>MugBit</p>
             </div>
             <div class="usrinfo">
-                <img src="<%= user.image %>" alt="Image" width="4%">
+                <img src="<%= user.image %>" alt="Image" width="10%">
                 <span><i>
                         <%= user.name %>!
                     </i></span>
@@ -187,10 +196,10 @@
         <div class="sidebar">
             <div class="list">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Java Bot</a></li>
-                    <li><a href="/chat">Chat</a></li>
-                    <li><a href="/logout">Log out</a></li>
+                    <a href="#"><li>Home</li></a>
+                    <a href="#"><li>Java Bot</li></a>
+                    <a href="/chat"><li>Chat</li></a>
+                    <a href="/logout"><li>Log out</li></a>
                 </ul>
             </div>
         </div>
@@ -208,7 +217,6 @@
                 <div class="document-container">
                     <div class="docxbox">
                         <h5>Certificiate</h5>
-                        <div class="label">Subject</div>
                         <div class="document">
                             <center>
                                 <img src="http://localhost:3000/msdocument.jfif" style="width: 45%;
@@ -226,7 +234,7 @@
                             </div>
                             <div class="download" id="dl-btn">Download</div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -268,6 +276,6 @@
         </div>
     </div>
 
-    </body>
+</body>
 
 </html>

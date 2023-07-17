@@ -3,6 +3,7 @@ const PizZip = require('pizzip');
 const Docxtemplater = require('docxtemplater');
 const fs = require('fs');
 const user_route = express();
+const docxToPdfConverter = require('docx-to-pdf');
 
 const bodyParser = require('body-parser');
 
@@ -12,7 +13,7 @@ const { SESSION_SECRET } = process.env;
 user_route.use(session({ secret: SESSION_SECRET }));
 
 user_route.use(bodyParser.json());
-user_route.use(bodyParser.urlencoded({extended:true}));
+user_route.use(bodyParser.urlencoded({ extended: true }));
 
 user_route.set('view engine', 'ejs');
 user_route.set('views', './views');
@@ -23,16 +24,16 @@ const path = require('path');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb){
+    destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '../public/images'));
     },
-    filename: function(req, file, cb){
+    filename: function (req, file, cb) {
         const name = Date.now() + "-" + file.originalname;
         cb(null, name);
     }
 });
 
-const upload = multer({storage:storage});
+const upload = multer({ storage: storage });
 
 const userController = require('../controllers/userController');
 
@@ -51,7 +52,7 @@ user_route.get('/dashboard', auth.isLogin, userController.loadDashboard);
 user_route.get('/chat', auth.isLogin, userController.loadChatPg);
 user_route.post('/save-chat', userController.saveChat);
 
-user_route.get('*', function(req, res){
+user_route.get('*', function (req, res) {
     res.redirect('/');
 })
 
@@ -91,7 +92,7 @@ user_route.post('/form', (req, res) => {
             let outputDocumentBuffer = outputDocument.getZip().generate({ type: 'nodebuffer' });
 
             // Save the buffer to a file
-            fs.writeFileSync(path.resolve(__dirname, `./files/${docname}-certificate.docx`), outputDocumentBuffer);
+            fs.writeFileSync(path.resolve(__dirname, `../public/files/${docname}-certificate.docx`), outputDocumentBuffer);
         } catch (error) {
             console.error(`ERROR Filling out Template:`);
             console.error(error);
@@ -100,10 +101,9 @@ user_route.post('/form', (req, res) => {
         console.error(`ERROR Loading Template:`);
         console.error(error);
     }
+    
     res.redirect('/dashboard');
 });
-
-
 
 
 module.exports = user_route;
